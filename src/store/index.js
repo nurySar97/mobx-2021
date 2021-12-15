@@ -1,8 +1,8 @@
-import { action, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 
 class Box {
-  width = 400;
-  height = 400;
+  width = 200;
+  height = 200;
 
   constructor() {
     makeObservable(this, {
@@ -10,6 +10,8 @@ class Box {
       height: observable.ref,
       setWidth: action.bound,
       setHeight: action.bound,
+      area: computed,
+      perimeter: computed,
     });
   }
 
@@ -25,6 +27,10 @@ class Box {
 
   get area() {
     return this.width * this.height;
+  }
+  get perimeter() {
+    if (!this.width || !this.height) return 0;
+    return (Number(this.width) + Number(this.height)) * 2;
   }
 }
 

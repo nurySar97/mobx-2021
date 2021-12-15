@@ -17,15 +17,15 @@ body {
     padding: 1rem;
 }
 
-.box {
+.box-rectangle {
     width: 100%;
     overflow: hidden;
 }
 
-.box__item {
+.box-rectangle__item {
     background-color: teal;
 }
 
-.controllers {
+.box-controllers {
     padding: 1rem;
 }
