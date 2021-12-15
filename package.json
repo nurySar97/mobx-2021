@@ -82,7 +82,11 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.16.5",
+    "@babel/plugin-proposal-decorators": "^7.16.5",
+    "@babel/preset-env": "^7.16.5"
+  },
   "jest": {
     "roots": [
       "<rootDir>/src"
@@ -133,8 +137,13 @@
     "resetMocks": true
   },
   "babel": {
+    "plugins": [
+      ["@babel/plugin-proposal-decorators", { "legacy": true }],
+      ["@babel/plugin-proposal-class-properties", { "loose": true }]
+  ],
     "presets": [
-      "react-app"
+      "react-app",
+      "@babel/preset-env"
     ]
   }
 }

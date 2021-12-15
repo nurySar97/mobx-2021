@@ -1,0 +1,31 @@
+html, 
+body {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+.content {
+    padding: 1rem;
+}
+
+.box {
+    width: 100%;
+    overflow: hidden;
+}
+
+.box__item {
+    background-color: teal;
+}
+
+.controllers {
+    padding: 1rem;
+}
