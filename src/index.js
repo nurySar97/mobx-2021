@@ -7,7 +7,7 @@ import {Provider} from "mobx-react";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider {...store}>
       <App />
     </Provider>
   </React.StrictMode>,

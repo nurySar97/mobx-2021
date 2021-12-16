@@ -7,6 +7,7 @@ const TodosItem = types
     id: types.string,
     title: types.string,
     completed: types.boolean,
+    isTitleChanging: types.boolean,
   })
   .actions((self) => ({
     setTitle(title) {
@@ -14,6 +15,9 @@ const TodosItem = types
     },
     toogleComplete() {
       self.completed = !self.completed;
+    },
+    toggleChangeTitile(value = false) {
+      self.isTitleChanging = value;
     },
   }));
 
@@ -27,6 +31,7 @@ const todosModel = types
         id: uuidV4(),
         title,
         completed: false,
+        isTitleChanging: false,
       });
     },
     removeItem(id) {

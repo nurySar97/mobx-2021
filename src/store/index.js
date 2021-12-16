@@ -11,7 +11,8 @@ const store = RootStore.create({
       {
         id: '1',
         title: 'Buy beer',
-        completed: false
+        completed: false,
+        isTitleChanging: false
       }
     ],
   },
