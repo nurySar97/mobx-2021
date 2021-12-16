@@ -29,7 +29,9 @@ const todosModel = types
         completed: false,
       });
     },
+    removeItem(id) {
+      self.todos = self.todos.filter((item) => item.id !== id);
+    },
   }));
-  
 
 export default todosModel;

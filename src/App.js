@@ -11,6 +11,17 @@ class Default extends Component {
 
   state = {
     isTodoItemTitleChange: false,
+    addTodoInputValue: "",
+  };
+
+  onAddtodoBtnClick = () => {
+    if (!this.state.addTodoInputValue) return alert("No title");
+    this.props.store.todo.addItem(this.state.addTodoInputValue);
+    this.setState({ addTodoInputValue: "" });
+  };
+
+  onAddtodoInputChange = (e) => {
+    this.setState({ addTodoInputValue: e.target.value });
   };
 
   onTodoItemTitleChange = (e, item) => {
@@ -33,6 +44,18 @@ class Default extends Component {
   render() {
     return (
       <div className="content">
+        <div style={{ textAlign: "center" }}>
+          <p>
+            <input
+              type=""
+              onChange={this.onAddtodoInputChange}
+              value={this.state.addTodoInputValue}
+            />
+          </p>
+          <p>
+            <button onClick={this.onAddtodoBtnClick}>Add todo</button>
+          </p>
+        </div>
         <ul>
           {this.props.store.todo.todos.map((item) => {
             return (
@@ -44,6 +67,7 @@ class Default extends Component {
                   alignItems: "center",
                   padding: ".75rem 1rem",
                   background: "teal",
+                  marginBottom: ".5rem",
                 }}
               >
                 {this.state.isTodoItemTitleChange ? (
@@ -56,18 +80,33 @@ class Default extends Component {
                   />
                 ) : (
                   <span
-                    style={{ outline: "none" }}
+                    style={{
+                      outline: "none",
+                      textDecoration: item.completed ? "line-through" : "none",
+                    }}
                     onClick={this.onHandleClickToTodoTitle}
                   >
                     {item.title}
                   </span>
                 )}
 
-                <input
-                  type="checkbox"
-                  checked={item.completed}
-                  onChange={item.toogleComplete}
-                />
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={item.completed}
+                    onChange={item.toogleComplete}
+                  />
+                  <button
+                    onClick={() => this.props.store.todo.removeItem(item.id)}
+                  >
+                    &times;
+                  </button>
+                </span>
               </li>
             );
           })}
