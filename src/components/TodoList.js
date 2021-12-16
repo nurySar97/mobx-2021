@@ -39,75 +39,83 @@ class Default extends Component {
     return (
       <div>
         <ul>
-          {this.props.todo.todos.map((item) => {
-            return (
-              <li
-                key={item.id}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: ".75rem 1rem",
-                  background: "teal",
-                  marginBottom: ".5rem",
-                }}
-              >
-                {item.isTitleChanging ? (
-                  <input
-                    style={{ outline: "none" }}
-                    onChange={(e) => this.onTodoItemTitleChange(e, item)}
-                    value={item.title}
-                    ref={this.inputRef}
-                  />
-                ) : (
-                  <span
-                    style={{
-                      outline: "none",
-                      textDecoration: item.completed
-                        ? "red line-through"
-                        : "none",
-                    }}
-                  >
-                    {item.title}
-                  </span>
-                )}
-
-                <span
+          {this.props.todo.todos.length ? (
+            this.props.todo.todos.map((item) => {
+              return (
+                <li
+                  key={item.id}
                   style={{
-                    display: "inline-flex",
+                    display: "flex",
+                    justifyContent: "space-between",
                     alignItems: "center",
+                    padding: ".75rem 1rem",
+                    background: "teal",
+                    marginBottom: ".5rem",
                   }}
                 >
-                  <input
-                    type="checkbox"
-                    checked={item.completed}
-                    onChange={item.toogleComplete}
-                  />
-                  {!item.isTitleChanging ? (
-                    <button
-                      style={btnStyles}
-                      onClick={() => this.onHandleClickToTodoTitle(true)(item)}
-                    >
-                      &#9998;
-                    </button>
+                  {item.isTitleChanging ? (
+                    <input
+                      style={{ outline: "none" }}
+                      onChange={(e) => this.onTodoItemTitleChange(e, item)}
+                      value={item.title}
+                      ref={this.inputRef}
+                    />
                   ) : (
+                    <span
+                      style={{
+                        outline: "none",
+                        textDecoration: item.completed
+                          ? "red line-through"
+                          : "none",
+                      }}
+                    >
+                      {item.title}
+                    </span>
+                  )}
+
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={item.completed}
+                      onChange={item.toogleComplete}
+                    />
+                    {!item.isTitleChanging ? (
+                      <button
+                        style={btnStyles}
+                        onClick={() =>
+                          this.onHandleClickToTodoTitle(true)(item)
+                        }
+                      >
+                        &#9998;
+                      </button>
+                    ) : (
+                      <button
+                        style={btnStyles}
+                        onClick={() =>
+                          this.onHandleClickToTodoTitle(false)(item)
+                        }
+                      >
+                        💾
+                      </button>
+                    )}
                     <button
                       style={btnStyles}
-                      onClick={() => this.onHandleClickToTodoTitle(false)(item)}
+                      onClick={() => this.props.todo.removeItem(item.id)}
                     >
-                      💾
+                      &times;
                     </button>
-                  )}
-                  <button
-                    style={btnStyles}
-                    onClick={() => this.props.todo.removeItem(item.id)}
-                  >
-                    &times;
-                  </button>
-                </span>
-              </li>
-            );
-          })}
+                  </span>
+                </li>
+              );
+            })
+          ) : (
+            <p style={{textAlign: 'center'}}>No todos yet!</p>
+          )}
         </ul>
       </div>
     );
