@@ -1,33 +1,20 @@
-import { action, makeObservable, observable } from "mobx";
+import { types } from "mobx-state-tree";
+import todosModel from "./models/todo.model";
 
-class Box {
-  width = 400;
-  height = 400;
+const RootStore = types.model({
+  todo: todosModel,
+});
 
-  constructor() {
-    makeObservable(this, {
-      width: observable.ref,
-      height: observable.ref,
-      setWidth: action.bound,
-      setHeight: action.bound,
-    });
-  }
-
-  setWidth(w) {
-    if (w < 0) return;
-    this.width = w;
-  }
-
-  setHeight(h) {
-    if (h < 0) return;
-    this.height = h;
-  }
-
-  get area() {
-    return this.width * this.height;
-  }
-}
-
-const store = { box: new Box() };
+const store = RootStore.create({
+  todo: {
+    todos: [
+      {
+        id: '1',
+        title: 'Buy beer',
+        completed: false
+      }
+    ],
+  },
+});
 
 export default store;

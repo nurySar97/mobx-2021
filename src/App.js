@@ -1,46 +1,77 @@
-import React, { Component } from "react";
-import { observer } from "mobx-react";
+import React, { Component, createRef } from "react";
+import { inject, observer } from "mobx-react";
 
+@inject("store")
 @observer
 class Default extends Component {
+  constructor(props) {
+    super(props);
+    this.inputRef = createRef(null);
+  }
+
+  state = {
+    isTodoItemTitleChange: false,
+  };
+
+  onTodoItemTitleChange = (e, item) => {
+    const value = e.target.value;
+    item.setTitle(value);
+  };
+
+  onHandleBlurFromTodoTitle = () => {
+    this.setState({ isTodoItemTitleChange: false });
+  };
+
+  onHandleClickToTodoTitle = async () => {
+    await new Promise((r) => {
+      this.setState({ isTodoItemTitleChange: true });
+      r();
+    });
+
+    this.inputRef.current.focus();
+  };
   render() {
-    const width = this.props.store.box.width;
-    const height = this.props.store.box.height;
     return (
       <div className="content">
-        <div className="controllers">
-          <p>
-            <label htmlFor="controllers-width">Width</label>
-            <input
-              value={width}
-              onChange={(e) => this.props.store.box.setWidth(e.target.value)}
-              id="controllers-width"
-              type="number"
-            />
-          </p>
+        <ul>
+          {this.props.store.todo.todos.map((item) => {
+            return (
+              <li
+                key={item.id}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: ".75rem 1rem",
+                  background: "teal",
+                }}
+              >
+                {this.state.isTodoItemTitleChange ? (
+                  <input
+                    style={{ outline: "none" }}
+                    onChange={(e) => this.onTodoItemTitleChange(e, item)}
+                    onBlur={this.onHandleBlurFromTodoTitle}
+                    value={item.title}
+                    ref={this.inputRef}
+                  />
+                ) : (
+                  <span
+                    style={{ outline: "none" }}
+                    onClick={this.onHandleClickToTodoTitle}
+                  >
+                    {item.title}
+                  </span>
+                )}
 
-          <p>
-            <label htmlFor="controllers-height">Height</label>
-            <input
-              value={height}
-              onChange={(e) => this.props.store.box.setHeight(e.target.value)}
-              id="controllers-height"
-              type="number"
-            />
-          </p>
-        </div>
-
-        <p>Area: {this.props.store.box.area}px^2</p>
-
-        <div className="box">
-          <div
-            className="box__item"
-            style={{
-              width: (width || 0) + "px",
-              height: (height || 0) + "px",
-            }}
-          ></div>
-        </div>
+                <input
+                  type="checkbox"
+                  checked={item.completed}
+                  onChange={item.toogleComplete}
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }

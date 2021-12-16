@@ -29,3 +29,7 @@ body {
 .controllers {
     padding: 1rem;
 }
+
+input {
+    margin: 0;
+}
