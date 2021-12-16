@@ -27,10 +27,6 @@ class Default extends Component {
     item.setTitle(value);
   };
 
-  onHandleBlurFromTodoTitle = (item) => {
-    item.toggleChangeTitile(false);
-  };
-
   onHandleClickToTodoTitle = (value) => async (item) => {
     await new Promise((r) => {
       item.toggleChangeTitile(value);
@@ -60,7 +56,6 @@ class Default extends Component {
                   <input
                     style={{ outline: "none" }}
                     onChange={(e) => this.onTodoItemTitleChange(e, item)}
-                    onBlur={() => this.onHandleBlurFromTodoTitle(item)}
                     value={item.title}
                     ref={this.inputRef}
                   />
