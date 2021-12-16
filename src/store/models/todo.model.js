@@ -1,3 +1,4 @@
+import { values } from "mobx";
 import { types } from "mobx-state-tree";
 import { v4 } from "uuid";
 const uuidV4 = v4;
@@ -37,6 +38,10 @@ const todosModel = types
     removeItem(id) {
       self.todos = self.todos.filter((item) => item.id !== id);
     },
+  }))
+  .views((self) => ({
+    get countOfTodos() {
+      return values(self.todos).length;
+    },
   }));
-
 export default todosModel;
