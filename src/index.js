@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import store from "./store";
-import {Provider} from "mobx-react";
+import { Provider } from "mobx-react";
 
 ReactDOM.render(
   <React.StrictMode>

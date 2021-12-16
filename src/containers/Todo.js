@@ -6,7 +6,7 @@ const Default = (props) => {
   return (
     <div>
       <div className="todo">
-        <section style={{textAlign: 'center'}}>
+        <section style={{ textAlign: "center" }}>
           <h1>Todo list</h1>
           <p>Count of todos: {props.todo.countOfTodos}</p>
         </section>

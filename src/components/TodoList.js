@@ -1,4 +1,4 @@
-import { inject, observer } from "mobx-react";
+  import { inject, observer } from "mobx-react";
 import React, { Component, createRef } from "react";
 
 const btnStyles = {
@@ -114,7 +114,7 @@ class Default extends Component {
               );
             })
           ) : (
-            <p style={{textAlign: 'center'}}>No todos yet!</p>
+            <p style={{ textAlign: "center" }}>No todos yet!</p>
           )}
         </ul>
       </div>
