@@ -39,8 +39,8 @@ const todosModel = types
     removeItem(id) {
       self.todos = self.todos.filter((item) => item.id !== id);
     },
-    selectTodoItem(id) {
-      self.selectedTodo = id;
+    toggleSelectItem(value) {
+      self.selectedTodo = value;
     },
   }))
   .views((self) => ({
@@ -48,5 +48,5 @@ const todosModel = types
       return values(self.todos).length;
     },
   }));
-  
+
 export default todosModel;
