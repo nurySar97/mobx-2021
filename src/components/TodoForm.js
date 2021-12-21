@@ -1,12 +1,11 @@
 import { inject, observer } from "mobx-react";
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 
 @inject("todo")
 @observer
 class Default extends Component {
   constructor(props) {
     super(props);
-    this.toggleRef = createRef(false);
   }
   state = {
     addTodoInputValue: "",
@@ -27,18 +26,7 @@ class Default extends Component {
     return (
       <section>
         <div style={{ textAlign: "center" }}>
-          <h1>{this.props.todo.selectedTodo.title}</h1>
-          <p>
-            <button
-              onClick={() => {
-                const arg = this.toggleRef.current ? "2" : "1";
-                this.props.todo.toggleSelectItem(arg);
-                this.toggleRef.current = !this.toggleRef.current;
-              }}
-            >
-              Toggle Change Select Todo Item
-            </button>
-          </p>
+          <h1>Doing: {this.props.todo.doingTodo.title}</h1>
         </div>
         <form
           style={{ textAlign: "center" }}

@@ -1,5 +1,5 @@
 import { values } from "mobx";
-import { types } from "mobx-state-tree";
+import { getParent, getSnapshot, types } from "mobx-state-tree";
 import { v4 } from "uuid";
 const uuidV4 = v4;
 
@@ -20,12 +20,17 @@ const TodosItem = types
     toggleChangeTitile(value = false) {
       self.isTitleChanging = value;
     },
+  }))
+  .views((self) => ({
+    get isTodoDoing() {
+      return self.id === getParent(self, 2).doingTodo.id;
+    },
   }));
 
 const todosModel = types
   .model("Todo", {
     todos: types.array(TodosItem),
-    selectedTodo: types.reference(TodosItem),
+    doingTodo: types.reference(TodosItem),
   })
   .actions((self) => ({
     addItem(title) {
@@ -37,10 +42,13 @@ const todosModel = types
       });
     },
     removeItem(id) {
+      if(id === self.doingTodo.id){
+        return alert('Oops can not remove this todo because now we are doing!')
+      }
       self.todos = self.todos.filter((item) => item.id !== id);
     },
-    toggleSelectItem(value) {
-      self.selectedTodo = value;
+    setDoing(id) {
+      self.doingTodo = id;
     },
   }))
   .views((self) => ({

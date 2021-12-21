@@ -1,21 +1,24 @@
 import todosModel from "../models/todo.model";
+import { v4 } from "uuid";
+
+const initDoingTodo = v4();
 
 const todoDefaultStore = todosModel.create({
   todos: [
     {
-      id: "1",
+      id: initDoingTodo,
       title: "Life is interesting if our brain works good!",
       completed: false,
       isTitleChanging: false,
     },
     {
-      id: "2",
+      id: v4(),
       title: "Don't let your emotions control you!",
       completed: false,
       isTitleChanging: false,
     },
   ],
-  selectedTodo: "2",
+  doingTodo: initDoingTodo,
 });
 
 export default todoDefaultStore;

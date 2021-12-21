@@ -1,4 +1,4 @@
-  import { inject, observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import React, { Component, createRef } from "react";
 
 const btnStyles = {
@@ -55,6 +55,7 @@ class Default extends Component {
                 >
                   {item.isTitleChanging ? (
                     <input
+                      className="todo-item-text"
                       style={{ outline: "none" }}
                       onChange={(e) => this.onTodoItemTitleChange(e, item)}
                       value={item.title}
@@ -62,6 +63,7 @@ class Default extends Component {
                     />
                   ) : (
                     <span
+                      className="todo-item-text"
                       style={{
                         outline: "none",
                         textDecoration: item.completed
@@ -77,6 +79,7 @@ class Default extends Component {
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
+                      width: "140px",
                     }}
                   >
                     <input
@@ -84,6 +87,16 @@ class Default extends Component {
                       checked={item.completed}
                       onChange={item.toogleComplete}
                     />
+                    <button
+                      style={{
+                        ...btnStyles,
+                        width: "auto",
+                        padding: "0 .5rem",
+                      }}
+                      onClick={() => this.props.todo.setDoing(item.id)}
+                    >
+                      {item.isTodoDoing ? "Doing" : "Do"}
+                    </button>
                     {!item.isTitleChanging ? (
                       <button
                         style={btnStyles}
