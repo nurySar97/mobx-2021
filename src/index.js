@@ -5,9 +5,11 @@ import App from "./App";
 import store from "./store";
 import { Provider } from "mobx-react";
 
+const { todo } = store;
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider {...store}>
+    <Provider todo={todo}>
       <App />
     </Provider>
   </React.StrictMode>,

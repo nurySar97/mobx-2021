@@ -4,8 +4,8 @@ import { v4 } from "uuid";
 const uuidV4 = v4;
 
 const TodosItem = types
-  .model({
-    id: types.string,
+  .model("TodosItem", {
+    id: types.identifier,
     title: types.string,
     completed: types.boolean,
     isTitleChanging: types.boolean,
@@ -23,8 +23,9 @@ const TodosItem = types
   }));
 
 const todosModel = types
-  .model({
+  .model("Todo", {
     todos: types.array(TodosItem),
+    selectedTodo: types.reference(TodosItem),
   })
   .actions((self) => ({
     addItem(title) {
@@ -38,10 +39,14 @@ const todosModel = types
     removeItem(id) {
       self.todos = self.todos.filter((item) => item.id !== id);
     },
+    selectTodoItem(id) {
+      self.selectedTodo = id;
+    },
   }))
   .views((self) => ({
     get countOfTodos() {
       return values(self.todos).length;
     },
   }));
+  
 export default todosModel;
