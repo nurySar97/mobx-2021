@@ -1,5 +1,5 @@
-import { values } from "mobx";
-import { getParent, getSnapshot, types } from "mobx-state-tree";
+import { set, values } from "mobx";
+import { getParent, getSnapshot, types, flow } from "mobx-state-tree";
 import { v4 } from "uuid";
 const uuidV4 = v4;
 
@@ -33,8 +33,20 @@ const todosModel = types
     doingTodo: types.reference(TodosItem),
   })
   .actions((self) => ({
+    getInitTodos: flow(function*() {
+      try {
+          const response = yield fetch('https://jsonplaceholder.typicode.com/todos');
+          const data = yield response.json();
+          const mapData = data.map(item=>({...item, id: (item.id + ''), isTitleChanging: false }))
+          self.todos = [...self.todos, ...mapData]
+          return 'Todos fetched!'
+      } catch (error) {
+          console.error("Failed to fetch projects", error)
+          self.state = "error"
+      }
+  }),
     addItem(title) {
-      self.todos.push({
+      self.todos.unshift({
         id: uuidV4(),
         title,
         completed: false,
@@ -42,8 +54,8 @@ const todosModel = types
       });
     },
     removeItem(id) {
-      if(id === self.doingTodo.id){
-        return alert('Oops can not remove this todo because now we are doing!')
+      if (id === self.doingTodo.id) {
+        return alert("Oops can not remove this todo because now we are doing!");
       }
       self.todos = self.todos.filter((item) => item.id !== id);
     },

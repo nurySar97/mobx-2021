@@ -35,6 +35,12 @@ class Default extends Component {
 
     this.inputRef?.current?.focus();
   };
+
+  async componentDidMount() {
+    const res = await this.props.todo.getInitTodos();
+    console.log("res: ", res);
+  }
+
   render() {
     return (
       <div>
